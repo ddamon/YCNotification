@@ -375,7 +375,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void run() {
                 progress += 10;
                 handler.postDelayed(this, 2000);
-                notificationUtils.setNotificationProgress(14,notificationCompat,progress);
+                notificationUtils.setNotificationProgress(14, progress);
             }
         }, 1000);
     }

@@ -49,6 +49,7 @@ public class NotificationUtils {
         this.defaults = builder.defaults;
         this.vibrate = builder.vibrate;
         this.priority = builder.priority;
+        this.smallIcon = builder.smallIcon;
         createNotificationChannel();
     }
 
@@ -58,6 +59,7 @@ public class NotificationUtils {
 
     private NotificationCompat.Builder builder;
     private Context context;
+    private int smallIcon;
     private String CHANNEL_ID;
     private String CHANNEL_NAME;
     private int progress;
@@ -197,9 +199,19 @@ public class NotificationUtils {
         return builder;
     }
 
-    public void setNotificationProgress(int notiId, Notification notification, int progress) {
+    /**
+     * 更新进度条
+     *
+     * @param notiId
+     * @param progress
+     */
+    public void setNotificationProgress(int notiId, int progress) {
         builder.setProgress(100, progress, false);
-        getManager().notify(notiId, getBuilder().build());
+        if (progress >= 100 || progress < 0) {
+            getManager().cancel(notiId);
+        } else {
+            getManager().notify(notiId, getBuilder().build());
+        }
     }
 
     /**
@@ -226,6 +238,7 @@ public class NotificationUtils {
         private long when = 0;
         private Uri sound = null;
         private int defaults = 0;
+        private int smallIcon;
 
         public long[] getVibrate() {
             return vibrate;
@@ -354,6 +367,17 @@ public class NotificationUtils {
 
         public Builder setPriority(int priority) {
             this.priority = priority;
+            return this;
+        }
+
+        /**
+         * 设置图标 如果sendNotification传0则此处必须设置
+         *
+         * @param icon
+         * @return
+         */
+        public Builder setSmallIcon(int icon) {
+            this.smallIcon = icon;
             return this;
         }
 
