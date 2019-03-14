@@ -27,7 +27,7 @@ public class NotificationUtil {
      * @param context 上下文
      */
     public static void showNotification(Context context) {
-        Notification notification = new NotificationCompat.Builder(context)
+        Notification notification = new NotificationCompat.Builder(context,"1")
                 /**设置通知左边的大图标**/
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
                 /**设置通知右边的小图标**/
@@ -50,7 +50,7 @@ public class NotificationUtil {
                 .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
                 .setContentIntent(PendingIntent.getActivity(context, 1, new Intent(context, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT))
                 .build();
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         /**发起通知**/
         notificationManager.notify(0, notification);
     }
@@ -62,13 +62,13 @@ public class NotificationUtil {
      */
     public static void showNotificationProgress(Context context) {
         //进度条通知
-        final NotificationCompat.Builder builderProgress = new NotificationCompat.Builder(context);
+        final NotificationCompat.Builder builderProgress = new NotificationCompat.Builder(context,"1");
         builderProgress.setContentTitle("下载中");
         builderProgress.setSmallIcon(R.mipmap.ic_launcher);
         builderProgress.setTicker("进度条通知");
         builderProgress.setProgress(100, 0, false);
         final Notification notification = builderProgress.build();
-        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         //发送一个通知
         notificationManager.notify(2, notification);
         /**创建一个计时器,模拟下载进度**/
@@ -107,7 +107,7 @@ public class NotificationUtil {
      * @param context
      */
     public static void showFullScreen(Context context) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"1");
         Intent mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://blog.csdn.net/itachi85/"));
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, mIntent, 0);
         builder.setContentIntent(pendingIntent);
@@ -122,9 +122,10 @@ public class NotificationUtil {
         //如果描述的PendingIntent已经存在，则在产生新的Intent之前会先取消掉当前的
         PendingIntent hangPendingIntent = PendingIntent.getActivity(context, 0, hangIntent, PendingIntent.FLAG_CANCEL_CURRENT);
         builder.setFullScreenIntent(hangPendingIntent, true);
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(3, builder.build());
     }
+
     /**
      * 折叠式
      *
@@ -139,7 +140,7 @@ public class NotificationUtil {
         view_custom.setTextColor(R.id.tv_custom_title, Color.BLACK);
         view_custom.setTextViewText(R.id.tv_custom_content, "金州勇士官方宣布球队已经解雇了主帅马克-杰克逊，随后宣布了最后的结果。");
         view_custom.setTextColor(R.id.tv_custom_content, Color.BLACK);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context,"1");
         mBuilder.setContent(view_custom)
                 .setContentIntent(PendingIntent.getActivity(context, 4, new Intent(context, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT))
                 .setWhen(System.currentTimeMillis())// 通知产生的时间，会在通知信息里显示
@@ -148,7 +149,7 @@ public class NotificationUtil {
                 .setOngoing(false)//不是正在进行的   true为正在进行  效果和.flag一样
                 .setSmallIcon(R.mipmap.icon);
         Notification notify = mBuilder.build();
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(4, notify);
     }
 }
